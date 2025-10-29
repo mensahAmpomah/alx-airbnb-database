@@ -2,8 +2,8 @@
 
 SELECT User.first_name as firstname, User.last_name as lastname, Property.name as Property, Booking.start_date, Booking.end_date FROM Booking
 
-JOIN User on Booking.user_id = User.user_id
-JOIN Property on Booking.property_id = Property.property_id
+INNER JOIN User on Booking.user_id = User.user_id
+INNER JOIN Property on Booking.property_id = Property.property_id
 
 
 -- Write a query using LEFT JOIN to retrieve all properties and their reviews, Including Properties that have no reviews.
