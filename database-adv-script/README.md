@@ -45,3 +45,29 @@ The outer query only returns users where that count is greater than 3.
 
 Result:
 A list of users who have made more than three bookings.
+
+
+2.
+The COUNT(Booking.booking_id) function counts the total number of bookings per user.
+
+GROUP BY groups the results by each user.
+
+A LEFT JOIN is used so users with zero bookings still appear in the results.
+
+ORDER BY total_bookings DESC sorts users by who booked the most.
+
+Result:
+A ranked list of all users and how many bookings each has made.
+
+
+COUNT(Booking.booking_id) counts the total number of bookings per property.
+
+RANK() OVER (ORDER BY COUNT(...) DESC) assigns a rank:
+
+The property with the highest number of bookings is ranked 1.
+
+If two properties have the same booking count, they receive the same rank (ties are allowed).
+
+GROUP BY ensures the count is done per property.
+
+The outer ORDER BY sorts the results by ranking.
