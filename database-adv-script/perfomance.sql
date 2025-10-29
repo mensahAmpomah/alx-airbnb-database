@@ -1,3 +1,8 @@
+Initial Query (Before Optimization)
+--------------------------------------------------------------
+-- Retrieve all bookings along with user details, property details,
+-- and payment details.
+
 EXPLAIN ANALYZE
 SELECT 
     b.booking_id,
@@ -15,22 +20,21 @@ JOIN Payment pay ON b.booking_id = pay.booking_id;
 
 
 --------------------------------------------------------------
- Performance Analysis (Expected Issues)
+Performance Analysis (Identified Issues)
 --------------------------------------------------------------
--- • Sequential scans on large tables (Booking, Property, Payment)
--- • Multiple JOINs increasing cost and memory usage
--- • No WHERE clause, returning too many rows
+-- • Sequential scans on Booking, Property, and Payment tables
+-- • No WHERE clause — retrieves too many rows
 -- • Missing indexes on frequently joined columns
+-- • High query cost and execution time
 
 
 --------------------------------------------------------------
 Optimized Query (After Refactoring)
 --------------------------------------------------------------
--- Optimization Techniques:
--- • Used WHERE clause to limit data range
--- • Selected only necessary columns
--- • Relied on indexed columns (user_id, property_id, booking_id)
--- • Reduced redundant joins
+-- Optimization Steps:
+--   • Added WHERE clause with multiple conditions (using AND)
+--   • Used indexed columns in joins
+--   • Selected only relevant columns
 
 EXPLAIN ANALYZE
 SELECT 
@@ -43,4 +47,5 @@ FROM Booking b
 JOIN "User" u ON b.user_id = u.user_id
 JOIN Property p ON b.property_id = p.property_id
 JOIN Payment pay ON b.booking_id = pay.booking_id
-WHERE b.created_at >= '2024-01-01';
+WHERE b.created_at >= '2024-01-01'
+AND pay.amount > 0;
