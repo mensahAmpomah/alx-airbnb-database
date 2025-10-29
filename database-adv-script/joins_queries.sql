@@ -8,8 +8,10 @@ INNER JOIN Property on Booking.property_id = Property.property_id
 
 -- Write a query using LEFT JOIN to retrieve all properties and their reviews, Including Properties that have no reviews.
 
-SELECT Property.name as Property, Property.created_at as created, Property.pricepernight as Price, Review.rating, Review.comment FROM Property 
+SELECT Property.name as Property, Property.created_at as created, Property.pricepernight as Price, Review.rating, Review.comment 
+FROM Property 
 LEFT JOIN Review on Property.property_id = Review.review_id
+ORDER BY Property.created_at DESC;
 
 
 -- Write a query using FULL OUTER JOIN to Retrieve all Users and all bookings, even if the user has no booking or a booking is not linked to a user.
